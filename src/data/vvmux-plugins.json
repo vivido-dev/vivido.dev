@@ -1,0 +1,42 @@
+[
+  {
+    "id": "dev.vivido.agent.claude",
+    "name": "Claude Code Agent Support",
+    "description": "Passive state detection and lifecycle adapter for Claude Code",
+    "repository": "vivido-dev/claude",
+    "version": "2026.8.17",
+    "permissions": ["integration.write"],
+    "kinds": ["agent provider", "integration"],
+    "verified": true
+  },
+  {
+    "id": "dev.vivido.agent.codex",
+    "name": "Codex Agent Support",
+    "description": "Passive state detection and lifecycle adapter for Codex",
+    "repository": "vivido-dev/codex",
+    "version": "2026.8.17",
+    "permissions": ["integration.write"],
+    "kinds": ["agent provider", "integration"],
+    "verified": true
+  },
+  {
+    "id": "dev.vivido.agent.hermes",
+    "name": "Hermes Agent Support",
+    "description": "Passive state detection and lifecycle adapter for Hermes",
+    "repository": "vivido-dev/hermes",
+    "version": "2026.8.17",
+    "permissions": ["integration.write"],
+    "kinds": ["agent provider", "integration"],
+    "verified": true
+  },
+  {
+    "id": "dev.vivido.agent.opencode",
+    "name": "OpenCode Agent Support",
+    "description": "Passive state detection and lifecycle adapter for OpenCode",
+    "repository": "vivido-dev/opencode",
+    "version": "2026.8.17",
+    "permissions": ["integration.write"],
+    "kinds": ["agent provider", "integration"],
+    "verified": true
+  }
+]

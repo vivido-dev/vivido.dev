@@ -17,6 +17,7 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "tsc -b && vite build",
+    "plugins:sync": "node scripts/sync-vvmux-plugins.mjs",
     "lint": "oxlint",
     "preview": "vite preview"
   },

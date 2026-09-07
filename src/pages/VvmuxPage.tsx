@@ -70,6 +70,12 @@ export default function VvmuxPage() {
       </div>
 
       <div className="flex flex-wrap gap-4">
+        <Link
+          to="/vvmux/plugins"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-600 text-sm text-white hover:bg-purple-500 transition-colors"
+        >
+          Browse plugins
+        </Link>
         <a
           href="https://github.com/vivido-dev/vvmux"
           target="_blank"

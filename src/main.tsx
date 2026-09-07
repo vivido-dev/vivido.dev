@@ -7,8 +7,10 @@ import Home from './pages/Home'
 import Documents from './pages/Documents'
 import ConfigGuide from './pages/ConfigGuide'
 import Tutorials from './pages/Tutorials'
+import VividaPage from './pages/VividaPage'
 import VividoPage from './pages/VividoPage'
 import VvmuxPage from './pages/VvmuxPage'
+import VvmuxPluginsPage from './pages/VvmuxPluginsPage'
 import ViviPage from './pages/ViviPage'
 import NotFound from './pages/NotFound'
 
@@ -21,8 +23,10 @@ createRoot(document.getElementById('root')!).render(
           <Route path="docs" element={<Documents />} />
           <Route path="config" element={<ConfigGuide />} />
           <Route path="tutorials" element={<Tutorials />} />
+          <Route path="vivida" element={<VividaPage />} />
           <Route path="vivido" element={<VividoPage />} />
           <Route path="vvmux" element={<VvmuxPage />} />
+          <Route path="vvmux/plugins" element={<VvmuxPluginsPage />} />
           <Route path="vivi" element={<ViviPage />} />
           <Route path="*" element={<NotFound />} />
         </Route>
