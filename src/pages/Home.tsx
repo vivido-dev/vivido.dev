@@ -20,7 +20,7 @@ const features = [
       </svg>
     ),
     title: 'Inline Media',
-    description: 'Images, video, and audio rendered natively via Vivid Protocol 1.0. Media rides authenticated side channels — no base64 bloat, no escape sequence hacks.',
+    description: 'Images, video, and audio rendered natively via Vivid Protocol 1.5. Media rides authenticated side channels — no base64 bloat, no escape sequence hacks.',
   },
   {
     icon: (
@@ -72,9 +72,9 @@ const ecosystem = [
     link: '/vvmux',
   },
   {
-    name: 'Veston',
-    description: 'Run an isolated Weston desktop and stream it as live H.264 video into your Vivido terminal.',
-    link: 'https://github.com/vivido-dev/veston',
+    name: 'Vivida',
+    description: 'One home for your projects and AI agents. Organize native Vivido panes into workspaces, tabs, and splits.',
+    link: '/vivida',
   },
   {
     name: 'vvrd',
@@ -87,17 +87,17 @@ export default function Home() {
   return (
     <div>
       {/* Hero */}
-      <section className="px-4 sm:px-6 lg:px-8 pt-16 pb-12 sm:pt-24 sm:pb-20 max-w-7xl mx-auto">
-        <div className="text-center max-w-3xl mx-auto">
+      <section className="home-hero px-4 sm:px-6 lg:px-8 pt-16 pb-12 sm:pt-24 sm:pb-20 max-w-7xl mx-auto">
+        <div className="text-center max-w-5xl mx-auto">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-medium mb-8">
             <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
-            v0.2.1 — early access
+            THE VIVIDO FAMILY
           </div>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-zinc-100 tracking-tight leading-tight">
-            <span className="brand-text-gradient">Vivido</span>
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold text-zinc-100 tracking-tight leading-tight">
+            <span className="brand-text-gradient">See more.</span>
             <br />
-            <span className="text-zinc-200">The GPU Enhanced Terminal</span>
+            <span className="text-zinc-200">Do more in your terminal.</span>
           </h1>
 
           <p className="mt-6 text-base sm:text-lg text-zinc-400 leading-relaxed max-w-2xl mx-auto">
@@ -105,6 +105,11 @@ export default function Home() {
             rendered directly between your text and backgrounds — through authenticated side channels,
             never through escape sequences.
           </p>
+
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Link to="/vivido" className="primary-button">Explore Vivido <span aria-hidden="true">↗</span></Link>
+            <Link to="/vivida" className="secondary-button">Meet Vivida <span aria-hidden="true">→</span></Link>
+          </div>
 
           {/* Screenshot placeholders */}
           <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto">
@@ -127,6 +132,18 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+        <div className="spotlight grid md:grid-cols-2 gap-10 items-center">
+          <div>
+            <p className="eyebrow">MEET VIVIDA</p>
+            <h2 className="text-3xl sm:text-4xl font-semibold text-zinc-100 tracking-tight mt-4">Your projects.<br />Your agents. One window.</h2>
+            <p className="text-zinc-400 leading-relaxed mt-5 mb-7">Give every project a workspace, every task a pane, and your agents the tools to see and act alongside you.</p>
+            <Link to="/vivida" className="text-sky-300 hover:text-sky-200 font-medium">Explore the Vivida workspace <span aria-hidden="true">→</span></Link>
+          </div>
+          <ScreenshotPlaceholder label="Vivida workspaces, tabs, and split panes" aspectRatio="16/10" />
+        </div>
+      </section>
+
       {/* Features */}
       <section className="px-4 sm:px-6 lg:px-8 py-16 sm:py-20 border-t border-zinc-800">
         <div className="max-w-7xl mx-auto">
@@ -135,7 +152,7 @@ export default function Home() {
               Why Vivido
             </h2>
             <p className="mt-3 text-zinc-400 max-w-xl mx-auto">
-              Built from the ground up for performance and media. Not just another terminal.
+              A responsive terminal for code, media, and the tools you use every day.
             </p>
           </div>
 
@@ -164,7 +181,7 @@ export default function Home() {
               The Vivido Ecosystem
             </h2>
             <p className="mt-3 text-zinc-400 max-w-xl mx-auto">
-              A growing family of tools built on Vivid Protocol 1.0.
+              A growing family of tools built on Vivid Protocol 1.5.
             </p>
           </div>
 

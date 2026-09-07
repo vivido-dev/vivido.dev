@@ -6,6 +6,7 @@ interface NavbarProps {
 }
 
 const navLinks = [
+  { to: '/vivida', label: 'Vivida' },
   { to: '/docs', label: 'Docs' },
   { to: '/config', label: 'Config' },
   { to: '/tutorials', label: 'Tutorials' },
@@ -27,12 +28,10 @@ export default function Navbar({ onToggleSidebar }: NavbarProps) {
   return (
     <nav className="sticky top-0 z-50 border-b border-zinc-800 bg-zinc-950/80 backdrop-blur-sm">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-14 items-center justify-between">
+        <div className="flex h-20 items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 shrink-0">
-            <svg width="28" height="26" viewBox="0 0 48 46" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path fill="#863bff" d="M25.946 44.938c-.664.845-2.021.375-2.021-.698V33.937a2.26 2.26 0 0 0-2.262-2.262H10.287c-.92 0-1.456-1.04-.92-1.788l7.48-10.471c1.07-1.497 0-3.578-1.842-3.578H1.237c-.92 0-1.456-1.04-.92-1.788L10.013.474c.214-.297.556-.474.92-.474h28.894c.92 0 1.456 1.04.92 1.788l-7.48 10.471c-1.07 1.498 0 3.579 1.842 3.579h11.377c.943 0 1.473 1.088.89 1.83L25.947 44.94z" />
-            </svg>
+            <img src="/vivido_cropped.png" alt="" className="brand-logo" width="36" height="36" />
             <span className="text-lg font-semibold text-zinc-100 tracking-tight">Vivido</span>
           </Link>
 
@@ -77,6 +76,8 @@ export default function Navbar({ onToggleSidebar }: NavbarProps) {
               onClick={() => setMobileOpen(!mobileOpen)}
               className="md:hidden p-2 text-zinc-400 hover:text-zinc-200 transition-colors rounded-md hover:bg-zinc-800/50"
               aria-label="Toggle menu"
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-navigation"
             >
               {mobileOpen ? (
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -93,7 +94,7 @@ export default function Navbar({ onToggleSidebar }: NavbarProps) {
 
         {/* Mobile menu */}
         {mobileOpen && (
-          <div className="md:hidden border-t border-zinc-800 py-3 pb-4">
+          <div id="mobile-navigation" className="md:hidden border-t border-zinc-800 py-3 pb-4">
             {navLinks.map((link) => (
               <NavLink
                 key={link.to}

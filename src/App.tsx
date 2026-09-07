@@ -1,11 +1,23 @@
-import { useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Outlet, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar'
 import Footer from './components/Footer'
 
 export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const { pathname, hash } = useLocation()
+
+  useEffect(() => {
+    if (hash) {
+      document.getElementById(hash.slice(1))?.scrollIntoView()
+    } else {
+      window.scrollTo(0, 0)
+    }
+    document.title = pathname === '/vivida'
+      ? 'Vivida — A workspace for you and your agents'
+      : 'Vivido — The GPU Enhanced Terminal'
+  }, [pathname, hash])
 
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-300 flex flex-col">
