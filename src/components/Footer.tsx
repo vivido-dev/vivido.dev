@@ -27,7 +27,7 @@ const COLUMNS: { heading: string; links: { label: string; to: string }[] }[] = [
         label: 'Vivid 1.5 specification',
         to: 'https://github.com/vivido-dev/vivid_protocol/blob/dev/vivid-protocol-1.5-spec.md',
       },
-      { label: 'Rust and Python SDK', to: 'https://github.com/vivido-dev/vivid_sdk' },
+      { label: 'Vivid SDK (Rust, Python, TS)', to: 'https://github.com/vivido-dev/vivid_sdk' },
       { label: 'vivido on crates.io', to: 'https://crates.io/crates/vivido' },
     ],
   },
@@ -89,7 +89,7 @@ export default function Footer() {
 
         <div className="mt-12 flex flex-col items-start justify-between gap-3 border-t border-zinc-800 pt-6 sm:flex-row sm:items-center">
           <p className="text-xs text-zinc-600">
-            Free and open source under Apache-2.0. Built in Rust.
+            Free and open source under Apache-2.0.
           </p>
           <p className="font-mono text-xs text-zinc-700">vivido.dev</p>
         </div>

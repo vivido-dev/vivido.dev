@@ -16,7 +16,7 @@ const LEARN = [
   { to: '/config', label: 'Config' },
 ]
 
-const GITHUB_ORG = 'https://github.com/vivido-dev/vivido'
+const GITHUB_ORG = 'https://github.com/vivido-dev'
 const X_LINK = 'https://x.com/vivido_dev'
 
 const XMark = ({ className = 'h-4 w-4' }: { className?: string }) => (

@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom'
-import HeroTerminal from '../components/HeroTerminal'
 import TerminalWindow from '../components/TerminalWindow'
+import heroScreenshot from '../assets/vivida_screenshot_01.png'
 import MediaSurface from '../components/MediaSurface'
 import ProtocolDiagram from '../components/ProtocolDiagram'
 import SectionHeading from '../components/SectionHeading'
 import SuiteGrid from '../components/SuiteGrid'
 import InstallPanel from '../components/InstallPanel'
 import CopyCommand from '../components/CopyCommand'
-import { DownloadCta, WindowsInstallerLink } from '../components/DownloadCta'
+import { DownloadCta } from '../components/DownloadCta'
 import CodeTabs from '../components/CodeTabs'
 import Reveal from '../components/Reveal'
 
@@ -78,9 +78,8 @@ export default function Home() {
 
             <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <DownloadCta className="w-full max-w-xs sm:w-auto" />
-              <WindowsInstallerLink className="w-full max-w-xs sm:w-auto" />
               <a href="#install" className="btn btn-ghost w-full max-w-xs sm:w-auto">
-                Linux instructions
+                Other installation options
                 <span aria-hidden="true">↓</span>
               </a>
             </div>
@@ -96,8 +95,28 @@ export default function Home() {
             </ul>
           </div>
 
-          <div className="mx-auto mt-14 max-w-4xl">
-            <HeroTerminal />
+          <div className="mx-auto mt-14 max-w-5xl">
+            <img
+              src={heroScreenshot}
+              alt="Vivida window showing Vivido panes playing media inline"
+              width={1915}
+              height={1077}
+              className="h-auto w-full rounded-[14px] border border-[#24384e] bg-[#0a1119] shadow-[0_40px_90px_-40px_rgba(0,0,0,0.9)]"
+            />
+            <p className="mt-4 text-center">
+              <a
+                href="https://youtu.be/wiVmHJg4e2E"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 text-sm text-zinc-400 transition-colors hover:text-accent-300"
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="h-4 w-4">
+                  <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4L15.8 12l-6.2 3.6Z" />
+                </svg>
+                Watch it in action on YouTube
+                <span aria-hidden="true">↗</span>
+              </a>
+            </p>
           </div>
         </div>
       </section>
