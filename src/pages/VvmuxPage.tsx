@@ -1,93 +1,126 @@
-import ScreenshotPlaceholder from '../components/ScreenshotPlaceholder'
 import { Link } from 'react-router-dom'
+import PageHero from '../components/PageHero'
+import TerminalWindow from '../components/TerminalWindow'
+import MediaSurface from '../components/MediaSurface'
+import SectionHeading from '../components/SectionHeading'
+import FeatureList from '../components/FeatureList'
+import CopyCommand from '../components/CopyCommand'
+import GithubButton from '../components/GithubButton'
+import Reveal from '../components/Reveal'
+
+const FEATURES = [
+  'Detachable named sessions backed by a persistent server',
+  'Tabs, tiled and floating panes, zoom, copy mode, and mouse resize',
+  'A virtual Vivid presenter per pane — media survives detach and re-attach',
+  'Fragment-aware pane media occlusion and stable snapshot reconciliation',
+  'Scriptable pane automation through vvmux msg',
+  'A plugin system with an agent navigator that reports idle, working, or blocked',
+]
+
+const KEYS = [
+  ['Ctrl+b %', 'Split left and right'],
+  ['Ctrl+b "', 'Split top and bottom'],
+  ['Ctrl+b ←→↑↓', 'Move focus between panes'],
+  ['Ctrl+b z', 'Toggle zoom on the focused pane'],
+  ['Ctrl+b d', 'Detach, leaving everything running'],
+  ['Ctrl+b c / n / p', 'New tab, next tab, previous tab'],
+  ['Ctrl+b [', 'Copy mode'],
+]
 
 export default function VvmuxPage() {
   return (
-    <div className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 max-w-4xl mx-auto">
-      <div className="mb-4">
-        <Link to="/" className="text-sm text-zinc-500 hover:text-zinc-300 transition-colors">
-          &larr; Home
-        </Link>
-      </div>
+    <div>
+      <PageHero
+        backTo={{ to: '/', label: 'The Vivido suite' }}
+        eyebrow="vvmux · detachable multiplexer"
+        title={<>Detach the session.<br /><span className="text-gradient">Keep the media.</span></>}
+        lede={
+          <>
+            vvmux is tmux-shaped and Vivid-aware. Its background server owns panes, PTYs, layout, and
+            scrollback; the foreground client bridges only currently visible media into the attached
+            Vivido window. Detaching never hands the daemon your window token.
+          </>
+        }
+        actions={
+          <>
+            <Link to="/vvmux/plugins" className="btn btn-primary">
+              Browse plugins
+              <span aria-hidden="true">→</span>
+            </Link>
+            <GithubButton repo="vvmux" />
+          </>
+        }
+        aside={
+          <TerminalWindow title="vvmux — build · logs · media" tabs={['build', 'logs', 'media']}>
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <div>
+                <p className="text-xs"><span className="term-prompt">pane 0</span></p>
+                <p className="term-out text-xs">cargo build --release</p>
+                <p className="term-out text-xs">Compiling vivido v0.4.7</p>
+                <p className="term-out text-xs">Finished in 84.2s</p>
+              </div>
+              <div>
+                <p className="text-xs"><span className="term-prompt">pane 1</span></p>
+                <MediaSurface kind="video" badge="live" ratio="16/10" className="mt-1" />
+              </div>
+            </div>
+            <p className="mt-4 text-xs"><span className="term-prompt">~</span> <span className="term-path">$</span> vvmux detach</p>
+            <p className="term-out text-xs">[detached from session build]</p>
+            <p className="mt-2 text-xs"><span className="term-prompt">~</span> <span className="term-path">$</span> vvmux attach build</p>
+            <p className="term-out text-xs">media rehydrated · 2 panes · 1 track</p>
+          </TerminalWindow>
+        }
+      />
 
-      <h1 className="text-3xl sm:text-4xl font-bold text-zinc-100 tracking-tight mb-3">
-        vvmux
-      </h1>
-      <p className="text-lg text-zinc-400 mb-8">
-        A detachable terminal multiplexer for Vivido — with full Vivid Protocol media passthrough.
-      </p>
+      <section className="hairline px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+        <div className="mx-auto grid grid-cols-1 max-w-7xl gap-12 lg:grid-cols-2">
+          <Reveal>
+            <FeatureList heading="What it does" items={FEATURES} />
+            <div className="mt-8">
+              <CopyCommand command="cargo install vvmux" />
+            </div>
+          </Reveal>
 
-      <ScreenshotPlaceholder label="vvmux with tiled panes and inline media" aspectRatio="16/9" className="mb-10" />
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
-        <div>
-          <h2 className="text-lg font-semibold text-zinc-200 mb-3">Key Features</h2>
-          <ul className="space-y-2 text-sm text-zinc-400">
-            <li className="flex items-start gap-2">
-              <span className="text-purple-400 mt-0.5 shrink-0">&rarr;</span>
-              Detachable named sessions with persistent server
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-purple-400 mt-0.5 shrink-0">&rarr;</span>
-              Tiled and floating panes with mouse resize/move
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-purple-400 mt-0.5 shrink-0">&rarr;</span>
-              Virtual Vivid presenter — media passthrough to outer Vivido
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-purple-400 mt-0.5 shrink-0">&rarr;</span>
-              Pane automation API (vvmux msg) for scripting
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-purple-400 mt-0.5 shrink-0">&rarr;</span>
-              WebSocket gateway for xterm.js browser clients
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-purple-400 mt-0.5 shrink-0">&rarr;</span>
-              Fragment-aware pane media occlusion
-            </li>
-          </ul>
+          <Reveal delay={80}>
+            <h2 className="font-mono text-[11px] uppercase tracking-widest text-zinc-500">
+              Default keys
+            </h2>
+            <p className="mt-2 text-xs text-zinc-600">The prefix is Ctrl+b, as you would expect.</p>
+            <dl className="card mt-4 divide-y divide-zinc-800 px-5">
+              {KEYS.map(([keys, action]) => (
+                <div key={keys} className="flex flex-wrap items-center justify-between gap-3 py-3.5">
+                  <dt className="text-sm text-zinc-300">{action}</dt>
+                  <dd><kbd>{keys}</kbd></dd>
+                </div>
+              ))}
+            </dl>
+          </Reveal>
         </div>
-        <div>
-          <h2 className="text-lg font-semibold text-zinc-200 mb-3">Default Keys</h2>
-          <p className="text-xs text-zinc-500 mb-3">Prefix is Ctrl+b</p>
-          <ul className="space-y-1.5 text-sm text-zinc-400 font-mono">
-            <li><span className="text-purple-400">Ctrl+b %</span> — split left/right</li>
-            <li><span className="text-purple-400">Ctrl+b "</span> — split top/bottom</li>
-            <li><span className="text-purple-400">Ctrl+b Arrows</span> — focus panes</li>
-            <li><span className="text-purple-400">Ctrl+b z</span> — toggle zoom</li>
-            <li><span className="text-purple-400">Ctrl+b d</span> — detach</li>
-            <li><span className="text-purple-400">Ctrl+b c/n/p</span> — tabs</li>
-            <li><span className="text-purple-400">Ctrl+b [</span> — copy mode</li>
-          </ul>
+      </section>
+
+      <section className="hairline px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <SectionHeading
+            eyebrow="The security shape"
+            title="A daemon that outlives your window should not hold its keys."
+            lede="This is the part that makes a media-aware multiplexer different from a text one, and it is worth understanding before you trust it with a long-running session."
+          />
+          <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
+            {[
+              ['The server owns state', 'Panes, PTYs, layout, and scrollback live in a background process that survives detach.'],
+              ['The client owns authority', 'Only the attached foreground client holds the outer Vivido window token. Detaching releases it.'],
+              ['The bridge is narrow', 'Visible media is relayed through source-scoped writers, reconciled from stable snapshots.'],
+            ].map(([title, blurb], index) => (
+              <Reveal key={title} delay={index * 80}>
+                <div className="card h-full p-6">
+                  <h3 className="text-base font-semibold text-zinc-100">{title}</h3>
+                  <p className="mt-2.5 text-sm leading-relaxed text-zinc-400">{blurb}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
-      </div>
-
-      <div className="code-block mb-8">
-        <div className="text-xs text-zinc-500 mb-2">Install</div>
-        <code>$ cargo install vvmux</code>
-      </div>
-
-      <div className="flex flex-wrap gap-4">
-        <Link
-          to="/vvmux/plugins"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-600 text-sm text-white hover:bg-purple-500 transition-colors"
-        >
-          Browse plugins
-        </Link>
-        <a
-          href="https://github.com/vivido-dev/vvmux"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-zinc-800 text-sm text-zinc-300 hover:bg-zinc-700 transition-colors"
-        >
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-            <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
-          </svg>
-          GitHub
-        </a>
-      </div>
+      </section>
     </div>
   )
 }

@@ -23,42 +23,45 @@ export default function VvmuxPluginsPage() {
       <Link to="/vvmux" className="text-sm text-zinc-500 hover:text-zinc-300 transition-colors">
         &larr; vvmux
       </Link>
-      <div className="mt-5 mb-8">
-        <p className="text-xs font-semibold tracking-widest uppercase text-purple-400 mb-2">Marketplace</p>
-        <h1 className="text-3xl sm:text-4xl font-bold text-zinc-100 tracking-tight">vvmux plugins</h1>
-        <p className="text-zinc-400 mt-3 max-w-2xl">
+      <div className="mt-6 mb-10">
+        <p className="eyebrow">
+          <span className="eyebrow-dot" aria-hidden="true" />
+          Marketplace
+        </p>
+        <h1 className="mt-4 text-4xl font-semibold tracking-tight text-zinc-100 sm:text-5xl">vvmux plugins</h1>
+        <p className="mt-5 max-w-2xl text-base leading-relaxed text-zinc-400">
           Discover manifest-driven agent providers, integrations, panes, and workflows. vvmux shows
           each package's permissions before installation and does not run marketplace code.
         </p>
       </div>
 
-      <div className="grid sm:grid-cols-[1fr_auto] gap-3 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-3 mb-8">
         <input
           aria-label="Search plugins"
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           placeholder="Search plugins"
-          className="rounded-lg border border-zinc-800 bg-zinc-900 px-4 py-2.5 text-zinc-200 outline-none focus:border-purple-500"
+          className="rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-2.5 text-zinc-200 outline-none focus:border-accent-500"
         />
         <select
           aria-label="Filter plugin type"
           value={kind}
           onChange={(event) => setKind(event.target.value)}
-          className="rounded-lg border border-zinc-800 bg-zinc-900 px-4 py-2.5 text-zinc-300"
+          className="rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-2.5 text-zinc-300"
         >
           <option value="all">All types</option>
           {kinds.map((value) => <option key={value} value={value}>{value}</option>)}
         </select>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {visible.map((plugin: Plugin) => <PluginCard key={plugin.id} plugin={plugin} />)}
       </div>
       {visible.length === 0 && <p className="text-zinc-500 py-12 text-center">No plugins match that filter.</p>}
 
-      <div className="mt-12 rounded-xl border border-zinc-800 bg-zinc-900/50 p-5 text-sm text-zinc-400">
-        Publish a public GitHub repository with a root <code className="text-purple-300">vvmux-plugin.toml</code>
-        {' '}and the <code className="text-purple-300">vvmux-plugin</code> topic to be considered for the index.
+      <div className="card mt-12 p-5 text-sm text-zinc-400">
+        Publish a public GitHub repository with a root <code className="text-accent-300">vvmux-plugin.toml</code>
+        {' '}and the <code className="text-accent-300">vvmux-plugin</code> topic to be considered for the index.
       </div>
     </div>
   )
@@ -67,13 +70,13 @@ export default function VvmuxPluginsPage() {
 function PluginCard({ plugin }: { plugin: Plugin }) {
   const command = `vvmux plugin install ${plugin.repository}`
   return (
-    <article className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-5 flex flex-col">
+    <article className="card card-hover flex flex-col p-5">
       <div className="flex items-start justify-between gap-4">
         <div>
           <h2 className="font-semibold text-zinc-100">{plugin.name}</h2>
           <p className="text-xs text-zinc-500 mt-1">{plugin.id} · {plugin.version}</p>
         </div>
-        {plugin.verified && <span className="text-xs rounded-full bg-purple-500/15 text-purple-300 px-2 py-1">First-party</span>}
+        {plugin.verified && <span className="text-xs rounded-full border border-accent-400/25 bg-accent-400/10 text-accent-300 px-2 py-1">First-party</span>}
       </div>
       <p className="text-sm text-zinc-400 mt-4 flex-1">{plugin.description}</p>
       <div className="flex flex-wrap gap-2 mt-4">
@@ -87,7 +90,7 @@ function PluginCard({ plugin }: { plugin: Plugin }) {
         <button
           type="button"
           onClick={() => void navigator.clipboard?.writeText(command)}
-          className="text-xs text-purple-400 hover:text-purple-300"
+          className="text-xs text-accent-400 hover:text-accent-300"
         >Copy</button>
       </div>
       <a href={`https://github.com/${plugin.repository}`} target="_blank" rel="noreferrer" className="text-xs text-zinc-500 hover:text-zinc-300 mt-3">

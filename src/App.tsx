@@ -1,11 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
-import Sidebar from './components/Sidebar'
 import Footer from './components/Footer'
+import { metaFor } from './lib/meta'
+
+function setMeta(selector: string, content: string) {
+  document.querySelector<HTMLMetaElement>(selector)?.setAttribute('content', content)
+}
 
 export default function App() {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
   const { pathname, hash } = useLocation()
 
   useEffect(() => {
@@ -14,23 +17,27 @@ export default function App() {
     } else {
       window.scrollTo(0, 0)
     }
-    document.title = pathname === '/vivida'
-      ? 'Vivida — A workspace for you and your agents'
-      : 'Vivido — The GPU Enhanced Terminal'
   }, [pathname, hash])
 
+  useEffect(() => {
+    const { title, description } = metaFor(pathname)
+    document.title = title
+    setMeta('meta[name="description"]', description)
+    setMeta('meta[property="og:title"]', title)
+    setMeta('meta[property="og:description"]', description)
+    setMeta('meta[name="twitter:title"]', title)
+    setMeta('meta[name="twitter:description"]', description)
+    document
+      .querySelector<HTMLMetaElement>('meta[property="og:url"]')
+      ?.setAttribute('content', `https://vivido.dev${pathname}`)
+  }, [pathname])
+
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-300 flex flex-col">
-      <Navbar onToggleSidebar={() => setSidebarOpen((prev) => !prev)} />
-
-      <div className="flex flex-1">
-        <main className={`flex-1 min-w-0 transition-all duration-300 ${sidebarOpen ? 'sm:mr-96' : ''}`}>
-          <Outlet />
-        </main>
-
-        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-      </div>
-
+    <div className="flex min-h-screen flex-col bg-zinc-950 text-zinc-300">
+      <Navbar />
+      <main className="min-w-0 flex-1">
+        <Outlet />
+      </main>
       <Footer />
     </div>
   )

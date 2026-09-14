@@ -18,6 +18,8 @@
     "dev": "vite --host 0.0.0.0",
     "build": "tsc -b && vite build",
     "plugins:sync": "node scripts/sync-vvmux-plugins.mjs",
+    "installer:sync": "node scripts/sync-vrowser-installer.mjs",
+    "installer:check": "node scripts/sync-vrowser-installer.mjs --check",
     "lint": "oxlint",
     "preview": "vite preview"
   },

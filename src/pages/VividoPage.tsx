@@ -1,97 +1,159 @@
-import ScreenshotPlaceholder from '../components/ScreenshotPlaceholder'
 import { Link } from 'react-router-dom'
+import PageHero from '../components/PageHero'
+import TerminalWindow from '../components/TerminalWindow'
+import MediaSurface from '../components/MediaSurface'
+import SectionHeading from '../components/SectionHeading'
+import FeatureList from '../components/FeatureList'
+import CopyCommand from '../components/CopyCommand'
+import GithubButton from '../components/GithubButton'
+import Reveal from '../components/Reveal'
+
+const KEY_FEATURES = [
+  'GPU rendering through Vello and wgpu — Metal on macOS, DirectX 12 on Windows, Vulkan on Linux',
+  'Vivid Protocol 1.5: inline images, H.264/HEVC/VP9/AV1 video, and seven audio codecs',
+  'Exact-PTS playback with a linked audio/video clock and buffered startup',
+  'Authenticated media anchors with replay-resistant markers',
+  'vvssh for secure remote Vivid forwarding, with an optional separate media transport',
+  'Deterministic automation over vivido msg, plus headless named sessions',
+  'Source-scoped backpressure — a slow media source never blocks terminal I/O',
+]
+
+const DELIBERATE = [
+  'Linux is Wayland-only. No X11, no Xlib, no GLX.',
+  'No vi mode, vi search, or vi cursor actions.',
+  'Simplified mouse selection — drag only.',
+  'Media bytes never travel through the PTY. Only a bounded, authenticated anchor marker does.',
+]
+
+const PERFORMANCE = [
+  ['Terminal core', 'The Alacritty lineage, so throughput and correctness start from a known-good base.'],
+  ['Renderer', 'Vello computes vector and glyph work on the GPU; wgpu targets whatever backend the platform gives it.'],
+  ['Isolation', 'Media decode and playback are per-track. Saturation is contained to the track that caused it.'],
+]
 
 export default function VividoPage() {
   return (
-    <div className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 max-w-4xl mx-auto">
-      <div className="mb-4">
-        <Link to="/" className="text-sm text-zinc-500 hover:text-zinc-300 transition-colors">
-          &larr; Home
-        </Link>
-      </div>
+    <div>
+      <PageHero
+        backTo={{ to: '/', label: 'The Vivido suite' }}
+        eyebrow="Vivido · GPU terminal emulator"
+        title={<>A terminal that renders <span className="text-gradient">pictures and sound.</span></>}
+        lede={
+          <>
+            Vivido is a fast, cross-platform GPU terminal emulator and the reference Vivid Protocol
+            1.5 presenter. It authenticates producers, decodes and renders images and video, plays
+            linked audio, and manages scene placement and visibility — while the PTY stays ordinary
+            terminal I/O.
+          </>
+        }
+        actions={
+          <>
+            <GithubButton repo="vivido" />
+            <Link to="/config" className="btn btn-ghost">
+              Configuration reference
+              <span aria-hidden="true">→</span>
+            </Link>
+          </>
+        }
+        aside={
+          <TerminalWindow title="vivido — zsh — 110x32">
+            <p><span className="term-prompt">~/media</span> <span className="term-path">$</span> vivi orbit.mkv</p>
+            <p className="term-out">h264 1920x1080 · opus 48 kHz stereo</p>
+            <p className="term-out">prebuffer 480 ms · clock linked</p>
+            <div className="my-3">
+              <MediaSurface kind="video" badge="H.264 · exact-PTS" ratio="16/9" />
+            </div>
+            <p><span className="term-prompt">~/media</span> <span className="term-path">$</span> <span className="term-caret" /></p>
+          </TerminalWindow>
+        }
+      />
 
-      <h1 className="text-3xl sm:text-4xl font-bold text-zinc-100 tracking-tight mb-3">
-        Vivido
-      </h1>
-      <p className="text-lg text-zinc-400 mb-8">
-        A fast, cross-platform GPU terminal emulator and the reference Vivid Protocol 1.0 presenter.
-      </p>
-
-      <ScreenshotPlaceholder label="Vivido terminal screenshot" aspectRatio="16/9" className="mb-10" />
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
-        <div>
-          <h2 className="text-lg font-semibold text-zinc-200 mb-3">Key Features</h2>
-          <ul className="space-y-2 text-sm text-zinc-400">
-            <li className="flex items-start gap-2">
-              <span className="text-purple-400 mt-0.5 shrink-0">&rarr;</span>
-              GPU rendering via Vello + wgpu — Metal, DirectX 12, Vulkan
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-purple-400 mt-0.5 shrink-0">&rarr;</span>
-              Vivid Protocol 1.0: inline images, video, audio via side channels
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-purple-400 mt-0.5 shrink-0">&rarr;</span>
-              Authenticated media anchors with replay-resistant markers
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-purple-400 mt-0.5 shrink-0">&rarr;</span>
-              SSH media forwarding with vvssh
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-purple-400 mt-0.5 shrink-0">&rarr;</span>
-              Agent automation IPC for scripting and testing
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-purple-400 mt-0.5 shrink-0">&rarr;</span>
-              Source-scoped backpressure — slow media never blocks terminal I/O
-            </li>
-          </ul>
+      <section className="hairline px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+        <div className="mx-auto grid grid-cols-1 max-w-7xl gap-12 lg:grid-cols-2">
+          <Reveal>
+            <FeatureList heading="What it does" items={KEY_FEATURES} />
+          </Reveal>
+          <Reveal delay={80}>
+            <FeatureList heading="Deliberate differences" items={DELIBERATE} tone="muted" />
+            <p className="mt-6 text-xs leading-relaxed text-zinc-600">
+              These are choices, not gaps. Each one removes a class of compatibility surface that
+              Vivido would otherwise have to carry forever.
+            </p>
+          </Reveal>
         </div>
-        <div>
-          <h2 className="text-lg font-semibold text-zinc-200 mb-3">Deliberate Differences</h2>
-          <ul className="space-y-2 text-sm text-zinc-400">
-            <li className="flex items-start gap-2">
-              <span className="text-purple-400 mt-0.5 shrink-0">&rarr;</span>
-              Linux is Wayland-only — no X11, Xlib, or GLX
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-purple-400 mt-0.5 shrink-0">&rarr;</span>
-              No vi mode, vi search, or vi cursor actions
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-purple-400 mt-0.5 shrink-0">&rarr;</span>
-              Simplified mouse selection — drag only
-            </li>
-          </ul>
+      </section>
+
+      <section className="hairline px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <SectionHeading
+            eyebrow="Why it stays fast"
+            title="Speed is not a feature you add later."
+            lede="Three separate decisions keep a media-capable terminal as responsive as a text-only one."
+          />
+          <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
+            {PERFORMANCE.map(([title, blurb], index) => (
+              <Reveal key={title} delay={index * 80}>
+                <div className="card h-full p-6">
+                  <h3 className="text-base font-semibold text-zinc-100">{title}</h3>
+                  <p className="mt-2.5 text-sm leading-relaxed text-zinc-400">{blurb}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div className="code-block mb-8">
-        <div className="text-xs text-zinc-500 mb-2">Install</div>
-        <code>$ cargo install vivido</code>
-      </div>
+      <section className="hairline px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+        <div className="mx-auto grid grid-cols-1 max-w-7xl items-start gap-12 lg:grid-cols-2">
+          <div>
+            <SectionHeading
+              eyebrow="Install"
+              title="One crate installs the terminal and vvssh."
+              lede="Needs Rust 1.95 or newer, plus your platform's FFmpeg and audio development packages. Signed installers for macOS and Windows are on the releases page."
+            />
+            <div className="mt-8 space-y-3">
+              <CopyCommand command="cargo install vivido" />
+              <CopyCommand command="vivido --version" />
+            </div>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a href="https://github.com/vivido-dev/vivido/releases/latest" className="btn btn-primary">
+                Signed installers
+                <span aria-hidden="true">↓</span>
+              </a>
+              <Link to="/tutorials" className="btn btn-ghost">
+                First steps
+                <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+          </div>
 
-      <div className="flex flex-wrap gap-4">
-        <a
-          href="https://github.com/vivido-dev/vivido"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-zinc-800 text-sm text-zinc-300 hover:bg-zinc-700 transition-colors"
-        >
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-            <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
-          </svg>
-          GitHub
-        </a>
-        <Link
-          to="/config"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-zinc-800 text-sm text-zinc-300 hover:bg-zinc-700 transition-colors"
-        >
-          Configuration Guide &rarr;
-        </Link>
-      </div>
+          <div className="card p-6 sm:p-8">
+            <h3 className="text-base font-semibold text-zinc-100">Where to go next</h3>
+            <ul className="mt-5 divide-y divide-zinc-800">
+              {[
+                { to: '/config', label: 'vivido.toml reference', blurb: 'Every section, with its built-in defaults.' },
+                { to: '/docs', label: 'The automation surface', blurb: 'What vivido msg can observe and drive.' },
+                { to: '/vvmux', label: 'vvmux', blurb: 'Detach a session and keep the media.' },
+                { to: '/vivi', label: 'Vivi', blurb: 'The quickest way to put media on screen.' },
+              ].map((item) => (
+                <li key={item.to}>
+                  <Link to={item.to} className="group flex items-center justify-between gap-4 py-4">
+                    <span>
+                      <span className="block text-sm font-medium text-zinc-200 group-hover:text-accent-200">
+                        {item.label}
+                      </span>
+                      <span className="mt-0.5 block text-xs text-zinc-500">{item.blurb}</span>
+                    </span>
+                    <span className="text-zinc-600 transition-transform group-hover:translate-x-0.5 group-hover:text-accent-300" aria-hidden="true">
+                      →
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
     </div>
   )
 }

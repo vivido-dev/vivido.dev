@@ -12,6 +12,7 @@ import VividoPage from './pages/VividoPage'
 import VvmuxPage from './pages/VvmuxPage'
 import VvmuxPluginsPage from './pages/VvmuxPluginsPage'
 import ViviPage from './pages/ViviPage'
+import VvrdPage from './pages/VvrdPage'
 import NotFound from './pages/NotFound'
 
 createRoot(document.getElementById('root')!).render(
@@ -28,6 +29,7 @@ createRoot(document.getElementById('root')!).render(
           <Route path="vvmux" element={<VvmuxPage />} />
           <Route path="vvmux/plugins" element={<VvmuxPluginsPage />} />
           <Route path="vivi" element={<ViviPage />} />
+          <Route path="vvrd" element={<VvrdPage />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

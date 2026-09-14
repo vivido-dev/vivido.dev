@@ -1,13 +1,20 @@
 import { Link } from 'react-router-dom'
-import ScreenshotPlaceholder from '../components/ScreenshotPlaceholder'
+import PageHero from '../components/PageHero'
+import TerminalWindow from '../components/TerminalWindow'
+import MediaSurface from '../components/MediaSurface'
+import SectionHeading from '../components/SectionHeading'
+import CopyCommand from '../components/CopyCommand'
+import GithubButton from '../components/GithubButton'
+import Reveal from '../components/Reveal'
 
-const features = [
+const FEATURES = [
   ['01', 'A place for every project', 'Group your work into named workspaces. Move between projects from the sidebar, with tabs and splits keeping each task close at hand.'],
   ['02', 'More than a wall of text', 'Built on Vivido, your panes can show images, play video, and render audio alongside terminal output. Keep the preview next to the work.'],
   ['03', 'Agents with eyes and hands', 'Built-in automation lets agents inspect panes, take screenshots, type, press keys, and use the mouse to check the results of their work.'],
-  ['04', 'Room to find your flow', 'Open tabs, split panes, and arrange your workspace from the keyboard. GPU rendering keeps your terminal smooth and readable.'],
+  ['04', 'Room to find your flow', 'Open tabs, split panes, and arrange your workspace from the keyboard. GPU rendering keeps everything smooth and readable.'],
 ]
-const shortcuts = [
+
+const SHORTCUTS = [
   ['Mod T', 'New tab'],
   ['Mod D', 'Split left and right'],
   ['Mod Shift D', 'Split top and bottom'],
@@ -18,60 +25,125 @@ const shortcuts = [
 
 export default function VividaPage() {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-      <section className="product-hero grid lg:grid-cols-2 gap-12 items-center py-16 sm:py-24">
-        <div>
-          <Link to="/" className="text-sm text-zinc-400 hover:text-zinc-100">← The Vivido family</Link>
-          <p className="eyebrow mt-10">VIVIDA · TERMINAL WORKSPACE</p>
-          <h1 className="text-4xl sm:text-6xl font-semibold tracking-tight text-zinc-100 leading-tight mt-5">A shared home for you and <span className="brand-text-gradient">your agents.</span></h1>
-          <p className="text-lg text-zinc-400 leading-relaxed mt-6">Bring projects, terminals, and AI agents into one window. Vivida combines workspaces, tabs, and split panes with the media capabilities of Vivido.</p>
-          <div className="flex flex-wrap gap-3 mt-8">
-            <a href="https://github.com/vivido-dev/vivida" className="primary-button">View on GitHub <span aria-hidden="true">↗</span></a>
-            <a href="#workspace" className="secondary-button">Explore the workspace <span aria-hidden="true">↓</span></a>
+    <div>
+      <PageHero
+        backTo={{ to: '/', label: 'The Vivido suite' }}
+        eyebrow="Vivida · terminal workspace"
+        title={<>A shared home for you and <span className="text-gradient">your agents.</span></>}
+        lede={
+          <>
+            Bring projects, terminals, and AI agents into one window. Vivida combines workspaces,
+            tabs, and split panes with everything Vivido can render — and the automation an agent
+            needs to work in the same panes you are looking at, not a hidden sandbox.
+          </>
+        }
+        actions={
+          <>
+            <GithubButton repo="vivida" />
+            <a href="#workspace" className="btn btn-ghost">
+              Explore the workspace
+              <span aria-hidden="true">↓</span>
+            </a>
+          </>
+        }
+        aside={
+          <TerminalWindow title="vivida — api · web · agent" tabs={['api', 'web', 'agent']}>
+            <p className="text-xs"><span className="term-prompt">~/api</span> <span className="term-path">$</span> vvrd architecture.pdf</p>
+            <div className="my-3">
+              <MediaSurface kind="document" badge="PDF · page 7" ratio="16/9" />
+            </div>
+            <p className="term-out text-xs">agent: read pane 1, waiting on the test run</p>
+            <p className="term-out text-xs">agent: screenshot saved, diagram matches the spec</p>
+            <p className="text-xs"><span className="term-prompt">~/api</span> <span className="term-path">$</span> <span className="term-caret" /></p>
+          </TerminalWindow>
+        }
+      />
+
+      <section id="workspace" className="hairline px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <SectionHeading
+            eyebrow="Less window juggling, more making"
+            title="Everything in its place."
+          />
+          <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {FEATURES.map(([number, title, description], index) => (
+              <Reveal key={number} delay={index * 70}>
+                <article className="card h-full p-7 sm:p-8">
+                  <span className="font-mono text-xs text-accent-400">{number} /</span>
+                  <h3 className="mt-5 text-xl font-semibold text-zinc-100">{title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-zinc-400">{description}</p>
+                </article>
+              </Reveal>
+            ))}
           </div>
         </div>
-        <ScreenshotPlaceholder label="Vivida workspace with an agent and terminal panes" aspectRatio="5/4" />
       </section>
 
-      <section id="workspace" className="border-t border-zinc-800 py-16">
-        <p className="eyebrow">LESS WINDOW JUGGLING. MORE MAKING.</p>
-        <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-zinc-100 mt-4 mb-10">Everything in its place.</h2>
-        <div className="grid sm:grid-cols-2 gap-5">
-          {features.map(([number, title, description]) => (
-            <article key={number} className="feature-card p-7 sm:p-9 rounded-xl border border-zinc-800 bg-zinc-900/50">
-              <span className="text-sky-300 text-xs font-mono">{number} /</span>
-              <h3 className="text-xl font-semibold text-zinc-100 mt-5 mb-3">{title}</h3>
-              <p className="text-zinc-400 leading-relaxed">{description}</p>
-            </article>
-          ))}
-        </div>
-      </section>
+      <section className="px-4 pb-16 sm:px-6 sm:pb-20 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <div className="spotlight grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
+            <TerminalWindow title="vivida — agent driving pane 2">
+              <p className="term-out text-xs">$ vivida msg list-panes</p>
+              <p className="term-out text-xs">{'{"pane":2,"workspace":"api","title":"tests"}'}</p>
+              <p className="mt-2 text-xs"><span className="term-prompt">agent</span> <span className="term-path">$</span> vivida msg typing --pane 2 'cargo test'</p>
+              <p className="mt-2 text-xs"><span className="term-prompt">agent</span> <span className="term-path">$</span> vivida msg wait text 'test result: ok'</p>
+              <p className="term-out text-xs">{'{"matched":true,"screen_sequence":2043}'}</p>
+              <p className="mt-2 text-xs"><span className="term-prompt">agent</span> <span className="term-path">$</span> vivida msg screenshot --pane 2</p>
+              <p className="term-out text-xs">/tmp/vivida-pane2-2043.png</p>
+            </TerminalWindow>
 
-      <section className="spotlight grid md:grid-cols-2 gap-10 items-center mb-16">
-        <ScreenshotPlaceholder label="An agent inspecting and controlling a Vivida pane" aspectRatio="16/10" />
-        <div>
-          <p className="eyebrow">SEE. ACT. VERIFY.</p>
-          <h2 className="text-3xl font-semibold text-zinc-100 mt-4">Work alongside your agents.</h2>
-          <p className="text-zinc-400 leading-relaxed mt-5 mb-6">Agents can locate the right pane, inspect output, arrange tabs and splits, and take a screenshot to verify their work. You share the same workspace and can follow along as it happens.</p>
-          <a href="https://github.com/vivido-dev/vivida/blob/main/docs/automation.md" className="text-sky-300 hover:text-sky-200">Read the automation guide <span aria-hidden="true">↗</span></a>
-        </div>
-      </section>
-
-      <section className="grid md:grid-cols-2 gap-10 border-t border-zinc-800 pt-16">
-        <div>
-          <p className="eyebrow">STAY AT THE KEYBOARD</p>
-          <h2 className="text-3xl font-semibold text-zinc-100 mt-4">Make room in a keystroke.</h2>
-          <p className="text-zinc-400 leading-relaxed mt-5">Mod is Cmd on macOS and Ctrl elsewhere. Open the gear in the tab bar for the full shortcut list.</p>
-          <Link to="/vivido" className="inline-block text-sky-300 hover:text-sky-200 mt-6">Meet Vivido, the terminal inside <span aria-hidden="true">→</span></Link>
-        </div>
-        <dl className="rounded-xl border border-zinc-800 bg-zinc-900/50 px-6 divide-y divide-zinc-800">
-          {shortcuts.map(([keys, action]) => (
-            <div key={keys} className="flex flex-wrap justify-between items-center gap-3 py-4">
-              <dt className="text-sm text-zinc-300">{action}</dt>
-              <dd><kbd className="text-xs text-sky-200 bg-sky-400/10 border border-sky-300/15 rounded px-2 py-1">{keys}</kbd></dd>
+            <div>
+              <p className="eyebrow">
+                <span className="eyebrow-dot" aria-hidden="true" />
+                See. Act. Verify.
+              </p>
+              <h2 className="mt-4 text-3xl font-semibold tracking-tight text-zinc-100">
+                Work alongside your agents.
+              </h2>
+              <p className="mt-5 text-base leading-relaxed text-zinc-400">
+                Agents can locate the right pane, inspect output, arrange tabs and splits, and take a
+                screenshot to verify their work. You share the same workspace and follow along as it
+                happens — which also means you can take over mid-task.
+              </p>
+              <a
+                href="https://github.com/vivido-dev/vivida/blob/dev/docs/automation.md"
+                className="mt-6 inline-block text-sm text-accent-400 transition-colors hover:text-accent-300"
+              >
+                Read the automation guide <span aria-hidden="true">↗</span>
+              </a>
             </div>
-          ))}
-        </dl>
+          </div>
+        </div>
+      </section>
+
+      <section className="hairline px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+        <div className="mx-auto grid grid-cols-1 max-w-7xl items-start gap-12 lg:grid-cols-2">
+          <div>
+            <SectionHeading
+              eyebrow="Stay at the keyboard"
+              title="Make room in a keystroke."
+              lede="Mod is Cmd on macOS and Ctrl everywhere else. The gear in the tab bar has the full list."
+            />
+            <div className="mt-8">
+              <CopyCommand command="cargo install vivida" />
+            </div>
+            <Link
+              to="/vivido"
+              className="mt-6 inline-block text-sm text-accent-400 transition-colors hover:text-accent-300"
+            >
+              Meet Vivido, the terminal inside <span aria-hidden="true">→</span>
+            </Link>
+          </div>
+
+          <dl className="card divide-y divide-zinc-800 px-5">
+            {SHORTCUTS.map(([keys, action]) => (
+              <div key={keys} className="flex flex-wrap items-center justify-between gap-3 py-3.5">
+                <dt className="text-sm text-zinc-300">{action}</dt>
+                <dd><kbd>{keys}</kbd></dd>
+              </div>
+            ))}
+          </dl>
+        </div>
       </section>
     </div>
   )
