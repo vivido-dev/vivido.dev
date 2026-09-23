@@ -392,7 +392,7 @@ export default function Home() {
             <SectionHeading
               eyebrow="Get started"
               title="Install the suite."
-              lede="Vivido ships with vvssh. On Windows and macOS the signed installer brings Vivida, vvmux, vivi, vvrd, and vvpaint along with it."
+              lede="Vivido ships with vvssh. On Windows and macOS the signed installer brings Vivida, vvmux, vivi, and vvrd along with it."
             />
             <p className="mt-6 text-sm leading-relaxed text-zinc-500">
               Everything is free and Apache-2.0 licensed. If you would rather build from source, the

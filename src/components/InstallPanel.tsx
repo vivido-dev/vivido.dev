@@ -45,7 +45,7 @@ const CHANNELS: Record<Os, Channel> = {
   windows: {
     label: 'Windows',
     headline: 'Signed suite installer',
-    note: 'One installer puts Vivido, Vivida, vvmux, vivi, vvrd, vvpaint, and vvssh on your PATH. Renders with DirectX 12.',
+    note: 'One installer puts Vivido, Vivida, vvmux, vivi, vvrd, and vvssh on your PATH. Renders with DirectX 12.',
     download: { label: 'Download the .exe', href: DOWNLOAD_PLACEHOLDER },
     icon: WINDOWS_ICON,
   },
