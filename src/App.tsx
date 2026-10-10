@@ -3,6 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import { metaFor } from './lib/meta'
+import { useT } from './i18n/context'
 
 function setMeta(selector: string, content: string) {
   document.querySelector<HTMLMetaElement>(selector)?.setAttribute('content', content)
@@ -10,6 +11,7 @@ function setMeta(selector: string, content: string) {
 
 export default function App() {
   const { pathname, hash } = useLocation()
+  const t = useT()
 
   useEffect(() => {
     if (hash) {
@@ -20,7 +22,7 @@ export default function App() {
   }, [pathname, hash])
 
   useEffect(() => {
-    const { title, description } = metaFor(pathname)
+    const { title, description } = metaFor(t.meta, pathname)
     document.title = title
     setMeta('meta[name="description"]', description)
     setMeta('meta[property="og:title"]', title)
@@ -30,7 +32,7 @@ export default function App() {
     document
       .querySelector<HTMLMetaElement>('meta[property="og:url"]')
       ?.setAttribute('content', `https://vivido.dev${pathname}`)
-  }, [pathname])
+  }, [pathname, t])
 
   return (
     <div className="flex min-h-screen flex-col bg-zinc-950 text-zinc-300">

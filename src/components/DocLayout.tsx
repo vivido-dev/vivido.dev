@@ -1,4 +1,5 @@
 import { useEffect, useState, type ReactNode } from 'react'
+import { useT } from '../i18n/context'
 
 export interface DocSection {
   id: string
@@ -15,6 +16,7 @@ interface DocLayoutProps {
 
 /** Two-column documentation shell with a sticky, scroll-synced table of contents. */
 export default function DocLayout({ eyebrow, title, lede, sections, children }: DocLayoutProps) {
+  const t = useT()
   const [active, setActive] = useState(sections[0]?.id ?? '')
 
   useEffect(() => {
@@ -61,10 +63,10 @@ export default function DocLayout({ eyebrow, title, lede, sections, children }: 
 
       <div className="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
         <div className="gap-12 lg:grid lg:grid-cols-[200px_minmax(0,1fr)]">
-          <nav aria-label="On this page" className="hidden lg:block">
+          <nav aria-label={t.common.onThisPage} className="hidden lg:block">
             <div className="sticky top-24">
               <p className="font-mono text-[10px] uppercase tracking-widest text-zinc-600">
-                On this page
+                {t.common.onThisPage}
               </p>
               <ul className="mt-4 space-y-1 border-l border-zinc-800">
                 {sections.map((section) => (

@@ -1,3 +1,5 @@
+import { useT } from '../i18n/context'
+
 const BOX_WIDTH = 188
 const BOX_TOP = 62
 const BOX_HEIGHT = 150
@@ -107,6 +109,7 @@ function Lane({
 }
 
 export default function ProtocolDiagram({ className = '' }: { className?: string }) {
+  const t = useT().diagram
   return (
     <figure className={`m-0 ${className}`}>
       <div className="overflow-x-auto rounded-2xl border border-zinc-800 bg-zinc-950/60 p-4 sm:p-6">
@@ -114,16 +117,16 @@ export default function ProtocolDiagram({ className = '' }: { className?: string
           viewBox="0 0 880 272"
           className="block w-full min-w-[700px]"
           role="img"
-          aria-label="A producer sends ordinary text to Vivido on the PTY lane while images, video, and audio travel a separate authenticated Vivid side channel, so a stalled media lane cannot block terminal I/O."
+          aria-label={t.label}
         >
-          <Node x={LEFT_BOX} title="Producer" lines={['vivi · vvcam', 'vvrd · vvland', 'your own code']} />
-          <Node x={RIGHT_BOX} title="Vivido" lines={['presenter', 'Vello + wgpu', 'Metal/DX12/Vulkan']} />
+          <Node x={LEFT_BOX} title={t.producer} lines={['vivi · vvcam', 'vvrd · vvland', t.ownCode]} />
+          <Node x={RIGHT_BOX} title="Vivido" lines={[t.presenter, 'Vello + wgpu', 'Metal/DX12/Vulkan']} />
 
           <Lane
             y={PTY_Y}
             tag="PTY"
             tagColor="#7ee0a8"
-            label="ordinary terminal I/O — text, keys, resize"
+            label={t.pty}
           />
           <Packets y={PTY_Y} count={5} offset={0} kind="text" />
 
@@ -131,18 +134,18 @@ export default function ProtocolDiagram({ className = '' }: { className?: string
             y={VIVID_Y}
             tag="VIVID 1.5"
             tagColor="#69d1ff"
-            label="authenticated side channel — images, video, audio"
+            label={t.vivid}
             dashed
           />
           <Packets y={VIVID_Y} count={3} offset={0.5} kind="media" />
 
           <text x={440} y={252} textAnchor="middle" fill="#8fa4b8" fontSize={12.5}>
-            Per-track flow control: a slow or malformed source cannot stall input, rendering, audio, or another track.
+            {t.flow}
           </text>
         </svg>
       </div>
       <figcaption className="mt-3 text-xs text-zinc-600">
-        Media bytes never travel through the PTY. Only a bounded, authenticated anchor marker does.
+        {t.caption}
       </figcaption>
     </figure>
   )

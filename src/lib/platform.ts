@@ -17,8 +17,3 @@ export function detectPlatform(): Platform {
  * Swap these for the direct asset URLs at launch.
  */
 export const DOWNLOAD_PLACEHOLDER = 'https://github.com/vivido-dev/vivido/releases/latest'
-
-export const PLATFORM_DOWNLOAD: Record<Exclude<Platform, 'linux'>, { label: string; sublabel: string }> = {
-  macos: { label: 'Download for macOS', sublabel: '.pkg installer' },
-  windows: { label: 'Download for Windows', sublabel: '.exe installer' },
-}

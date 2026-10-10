@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
-import { SUITE, SUITE_GROUPS, STATUS_LABEL, type SuiteTool } from '../lib/suite'
+import { SUITE, SUITE_GROUPS, type SuiteTool } from '../lib/suite'
+import { useT } from '../i18n/context'
 
 const STATUS_CLASS: Record<SuiteTool['status'], string> = {
   stable: 'text-signal-green border-signal-green/25 bg-signal-green/10',
@@ -8,6 +9,7 @@ const STATUS_CLASS: Record<SuiteTool['status'], string> = {
 }
 
 function ToolCard({ tool }: { tool: SuiteTool }) {
+  const t = useT().suite
   const external = tool.href.startsWith('http')
   const body = (
     <>
@@ -18,7 +20,7 @@ function ToolCard({ tool }: { tool: SuiteTool }) {
         <span
           className={`rounded-full border px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider ${STATUS_CLASS[tool.status]}`}
         >
-          {STATUS_LABEL[tool.status]}
+          {t.status[tool.status]}
         </span>
         {external && (
           <svg className="ml-auto h-3 w-3 shrink-0 text-zinc-600" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
@@ -26,7 +28,7 @@ function ToolCard({ tool }: { tool: SuiteTool }) {
           </svg>
         )}
       </div>
-      <p className="mt-2.5 flex-1 text-sm leading-relaxed text-zinc-400">{tool.summary}</p>
+      <p className="mt-2.5 flex-1 text-sm leading-relaxed text-zinc-400">{t.tools[tool.id]}</p>
       <p className="mt-4 truncate rounded-lg border border-zinc-800 bg-zinc-950/70 px-3 py-2 font-mono text-xs text-zinc-500">
         <span className="text-signal-green">$</span> {tool.command}
       </p>
@@ -47,16 +49,17 @@ function ToolCard({ tool }: { tool: SuiteTool }) {
 }
 
 export default function SuiteGrid({ className = '' }: { className?: string }) {
+  const t = useT().suite
   return (
     <div className={`space-y-10 ${className}`}>
       {SUITE_GROUPS.map((group) => (
-        <div key={group.id}>
+        <div key={group}>
           <div className="mb-4 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-            <h3 className="text-sm font-semibold tracking-tight text-zinc-200">{group.label}</h3>
-            <p className="text-sm text-zinc-600">{group.blurb}</p>
+            <h3 className="text-sm font-semibold tracking-tight text-zinc-200">{t.groups[group].label}</h3>
+            <p className="text-sm text-zinc-600">{t.groups[group].blurb}</p>
           </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {SUITE.filter((tool) => tool.group === group.id).map((tool) => (
+            {SUITE.filter((tool) => tool.group === group).map((tool) => (
               <ToolCard key={tool.id} tool={tool} />
             ))}
           </div>

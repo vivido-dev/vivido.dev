@@ -1,16 +1,16 @@
 import { useState } from 'react'
 import CopyCommand from './CopyCommand'
 import { detectPlatform, DOWNLOAD_PLACEHOLDER, type Platform } from '../lib/platform'
+import { useT } from '../i18n/context'
+import Rich from '../i18n/Rich'
 
 type Os = Platform
 
+/** The preferred install path for a platform. Its headline and note are localised under `platform`. */
 interface Channel {
   label: string
-  /** Preferred path for this platform. */
-  headline: string
-  note: string
   command?: string
-  download?: { label: string; href: string }
+  download?: string
   icon: React.ReactNode
 }
 
@@ -37,35 +37,31 @@ const LINUX_ICON = (
 const CHANNELS: Record<Os, Channel> = {
   macos: {
     label: 'macOS',
-    headline: 'Signed package',
-    note: 'Renders with Metal. The package is Developer ID signed and notarised.',
-    download: { label: 'Download the .pkg', href: DOWNLOAD_PLACEHOLDER },
+    download: DOWNLOAD_PLACEHOLDER,
     icon: APPLE_ICON,
   },
   windows: {
     label: 'Windows',
-    headline: 'Signed suite installer',
-    note: 'One installer puts Vivido, Vivida, vvmux, vivi, vvrd, and vvssh on your PATH. Renders with DirectX 12.',
-    download: { label: 'Download the .exe', href: DOWNLOAD_PLACEHOLDER },
+    download: DOWNLOAD_PLACEHOLDER,
     icon: WINDOWS_ICON,
   },
   linux: {
     label: 'Linux',
-    headline: 'Build from crates.io',
-    note: 'Wayland-only by design, rendering with Vulkan. Needs Rust 1.95+ and your distribution’s FFmpeg and audio development packages.',
     command: 'cargo install vivido',
     icon: LINUX_ICON,
   },
 }
 
 export default function InstallPanel({ className = '' }: { className?: string }) {
+  const t = useT().platform
   const [os, setOs] = useState<Os>(detectPlatform)
   const channel = CHANNELS[os]
+  const copy = t[os]
   const order: Os[] = ['macos', 'linux', 'windows']
 
   return (
     <div className={`card overflow-hidden ${className}`}>
-      <div role="tablist" aria-label="Choose your platform" className="flex border-b border-zinc-800">
+      <div role="tablist" aria-label={t.choose} className="flex border-b border-zinc-800">
         {order.map((value) => {
           const active = value === os
           return (
@@ -83,7 +79,7 @@ export default function InstallPanel({ className = '' }: { className?: string })
             >
               <span className={active ? 'text-accent-400' : 'text-zinc-600'}>{channelIcon(value)}</span>
               {CHANNELS[value].label}
-              {active && <span className="sr-only">(selected)</span>}
+              {active && <span className="sr-only">{t.selected}</span>}
             </button>
           )
         })}
@@ -91,17 +87,17 @@ export default function InstallPanel({ className = '' }: { className?: string })
 
       <div className="p-5 sm:p-6">
         <div className="flex flex-wrap items-baseline justify-between gap-2">
-          <h3 className="text-base font-semibold text-zinc-100">{channel.headline}</h3>
+          <h3 className="text-base font-semibold text-zinc-100">{copy.headline}</h3>
           <span className="font-mono text-[11px] uppercase tracking-widest text-zinc-600">
             Apache-2.0
           </span>
         </div>
-        <p className="mt-2 text-sm leading-relaxed text-zinc-400">{channel.note}</p>
+        <p className="mt-2 text-sm leading-relaxed text-zinc-400">{copy.note}</p>
 
         <div className="mt-5 space-y-3">
-          {channel.download && (
-            <a href={channel.download.href} className="btn btn-primary w-full">
-              {channel.download.label}
+          {channel.download && 'download' in copy && (
+            <a href={channel.download} className="btn btn-primary w-full">
+              {copy.download}
               <span aria-hidden="true">↓</span>
             </a>
           )}
@@ -109,14 +105,7 @@ export default function InstallPanel({ className = '' }: { className?: string })
         </div>
 
         <p className="mt-4 text-xs text-zinc-600">
-          Prefer to read first? The{' '}
-          <a
-            className="text-accent-400 underline underline-offset-2 hover:text-accent-300"
-            href="https://github.com/vivido-dev/vivido/blob/dev/INSTALL.md"
-          >
-            install guide
-          </a>{' '}
-          lists per-platform build dependencies.
+          <Rich text={t.readFirst} linkClass="text-accent-400 underline underline-offset-2 hover:text-accent-300" />
         </p>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useT } from '../i18n/context'
 
 interface CopyCommandProps {
   command: string
@@ -10,6 +11,7 @@ interface CopyCommandProps {
 
 /** A shell command with a copy button. The prompt is never copied. */
 export default function CopyCommand({ command, prompt = '$', className = '', size = 'md' }: CopyCommandProps) {
+  const t = useT().common
   const [copied, setCopied] = useState(false)
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
@@ -38,7 +40,7 @@ export default function CopyCommand({ command, prompt = '$', className = '', siz
         type="button"
         onClick={copy}
         className="shrink-0 rounded-md p-1.5 text-zinc-500 transition-colors hover:bg-zinc-800 hover:text-accent-300"
-        aria-label={copied ? 'Copied' : `Copy "${command}" to the clipboard`}
+        aria-label={copied ? t.copied : t.copyCommand.replace('{command}', command)}
       >
         {copied ? (
           <svg className="w-4 h-4 text-signal-green" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
