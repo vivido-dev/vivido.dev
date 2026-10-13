@@ -71,7 +71,7 @@ const en = {
     '/vivido': {
       title: 'Vivido — GPU terminal emulator with inline video and audio',
       description:
-        'Vello and wgpu on Metal, DirectX 12, and Vulkan. Inline images, H.264/HEVC/VP9/AV1 video, seven audio codecs, exact-PTS playback, vvssh media forwarding, and deterministic automation over vivido msg.',
+        'Vello and wgpu on Metal, DirectX 12, and Vulkan. Inline images, H.264/HEVC/VP9/AV1 video, seven audio codecs, exact-PTS playback, vvssh media forwarding, Kitty graphics compatibility, and deterministic automation over vivido msg.',
     },
     '/vivida': {
       title: 'Vivida — A terminal workspace for you and your agents',
@@ -290,6 +290,7 @@ const en = {
     features: [
       'GPU rendering through Vello and wgpu — Metal on macOS, DirectX 12 on Windows, Vulkan on Linux',
       'Vivid Protocol 1.5: inline images, H.264/HEVC/VP9/AV1 video, and seven audio codecs',
+      'Kitty graphics protocol compatibility — kitten icat, timg, chafa, and yazi show still images inline',
       'Exact-PTS playback with a linked audio/video clock and buffered startup',
       'Authenticated media anchors with replay-resistant markers',
       'vvssh for secure remote Vivid forwarding, with an optional separate media transport',

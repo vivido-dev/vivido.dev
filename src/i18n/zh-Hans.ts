@@ -64,7 +64,7 @@ const zhHans: Messages = {
     '/vivido': {
       title: 'Vivido — 支持内嵌视频和音频的 GPU 终端模拟器',
       description:
-        '基于 Vello 与 wgpu，运行在 Metal、DirectX 12 和 Vulkan 之上。内嵌图片、H.264/HEVC/VP9/AV1 视频、七种音频编解码器、精确 PTS 播放、vvssh 媒体转发，以及通过 vivido msg 实现的确定性自动化。',
+        '基于 Vello 与 wgpu，运行在 Metal、DirectX 12 和 Vulkan 之上。内嵌图片、H.264/HEVC/VP9/AV1 视频、七种音频编解码器、精确 PTS 播放、vvssh 媒体转发、Kitty graphics 协议兼容，以及通过 vivido msg 实现的确定性自动化。',
     },
     '/vivida': {
       title: 'Vivida — 为你和你的智能体准备的终端工作区',
@@ -278,6 +278,7 @@ const zhHans: Messages = {
     features: [
       '通过 Vello 与 wgpu 进行 GPU 渲染——macOS 上用 Metal，Windows 上用 DirectX 12，Linux 上用 Vulkan',
       'Vivid Protocol 1.5：内嵌图片、H.264/HEVC/VP9/AV1 视频，以及七种音频编解码器',
+      '兼容 Kitty graphics 协议——kitten icat、timg、chafa、yazi 的静态图片直接内嵌显示',
       '精确 PTS 播放，音视频时钟联动，带缓冲的启动',
       '经过认证的媒体锚点，标记可抵御重放',
       '用 vvssh 安全地进行远程 Vivid 转发，可选独立的媒体传输通道',

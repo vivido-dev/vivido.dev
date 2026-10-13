@@ -64,7 +64,7 @@ const zhHant: Messages = {
     '/vivido': {
       title: 'Vivido — 支援內嵌影片與音訊的 GPU 終端機模擬器',
       description:
-        '以 Vello 與 wgpu 為基礎，執行於 Metal、DirectX 12 與 Vulkan 之上。內嵌圖片、H.264/HEVC/VP9/AV1 影片、七種音訊編解碼器、精確 PTS 播放、vvssh 媒體轉發，以及透過 vivido msg 實現的確定性自動化。',
+        '以 Vello 與 wgpu 為基礎，執行於 Metal、DirectX 12 與 Vulkan 之上。內嵌圖片、H.264/HEVC/VP9/AV1 影片、七種音訊編解碼器、精確 PTS 播放、vvssh 媒體轉發、Kitty graphics 協定相容，以及透過 vivido msg 實現的確定性自動化。',
     },
     '/vivida': {
       title: 'Vivida — 為你和你的代理程式打造的終端機工作區',
@@ -278,6 +278,7 @@ const zhHant: Messages = {
     features: [
       '透過 Vello 與 wgpu 進行 GPU 渲染——macOS 上用 Metal，Windows 上用 DirectX 12，Linux 上用 Vulkan',
       'Vivid Protocol 1.5：內嵌圖片、H.264/HEVC/VP9/AV1 影片，以及七種音訊編解碼器',
+      '相容 Kitty graphics 協定——kitten icat、timg、chafa、yazi 的靜態圖片直接內嵌顯示',
       '精確 PTS 播放，影音時鐘連動，帶緩衝的啟動',
       '經過驗證的媒體錨點，標記可抵禦重放',
       '用 vvssh 安全地進行遠端 Vivid 轉發，可選用獨立的媒體傳輸通道',

@@ -65,7 +65,7 @@ const ja: Messages = {
     '/vivido': {
       title: 'Vivido — 動画と音声をインライン再生できるGPUターミナルエミュレーター',
       description:
-        'Metal・DirectX 12・Vulkan上のVelloとwgpu。インライン画像、H.264/HEVC/VP9/AV1動画、7種類の音声コーデック、正確なPTS再生、vvsshによるメディア転送、vivido msgによる決定的な自動化。',
+        'Metal・DirectX 12・Vulkan上のVelloとwgpu。インライン画像、H.264/HEVC/VP9/AV1動画、7種類の音声コーデック、正確なPTS再生、vvsshによるメディア転送、Kitty graphicsプロトコル互換、vivido msgによる決定的な自動化。',
     },
     '/vivida': {
       title: 'Vivida — あなたとエージェントのためのターミナルワークスペース',
@@ -284,6 +284,7 @@ const ja: Messages = {
     features: [
       'VelloとwgpuによるGPU描画 — macOSではMetal、WindowsではDirectX 12、LinuxではVulkan',
       'Vivid Protocol 1.5：インライン画像、H.264/HEVC/VP9/AV1動画、7種類の音声コーデック',
+      'Kitty graphicsプロトコル互換 — kitten icat、timg、chafa、yaziが静止画をそのままインライン表示',
       '連動する音声/動画クロックとバッファ付きの開始による、正確なPTS再生',
       'リプレイ耐性のあるマーカーを用いた、認証済みメディアアンカー',
       'vvsshによる安全なリモートVivid転送。メディア用の別トランスポートも選べます',
