@@ -1,20 +1,24 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
+import LanguageSwitcher from './LanguageSwitcher'
+import { useT } from '../i18n/context'
+import { useDismiss } from '../lib/useDismiss'
 
+// Product names stay as written; the plugins entry and every blurb are localised.
 const PRODUCTS = [
-  { to: '/vivido', name: 'Vivido', blurb: 'The GPU terminal emulator' },
-  { to: '/vivida', name: 'Vivida', blurb: 'Workspaces for you and your agents' },
-  { to: '/vvmux', name: 'vvmux', blurb: 'Detachable, media-aware multiplexer' },
-  { to: '/vivi', name: 'Vivi', blurb: 'Play media from the command line' },
-  { to: '/vvrd', name: 'vvrd', blurb: 'Read PDFs and documents in the terminal' },
-  { to: '/vvmux/plugins', name: 'Plugins', blurb: 'The vvmux marketplace' },
-]
+  { id: 'vivido', to: '/vivido', name: 'Vivido' },
+  { id: 'vivida', to: '/vivida', name: 'Vivida' },
+  { id: 'vvmux', to: '/vvmux', name: 'vvmux' },
+  { id: 'vivi', to: '/vivi', name: 'Vivi' },
+  { id: 'vvrd', to: '/vvrd', name: 'vvrd' },
+  { id: 'plugins', to: '/vvmux/plugins', name: undefined },
+] as const
 
 const LEARN = [
-  { to: '/docs', label: 'Docs' },
-  { to: '/tutorials', label: 'Tutorials' },
-  { to: '/config', label: 'Config' },
-]
+  { id: 'docs', to: '/docs' },
+  { id: 'tutorials', to: '/tutorials' },
+  { id: 'config', to: '/config' },
+] as const
 
 const GITHUB_ORG = 'https://github.com/vivido-dev'
 const X_LINK = 'https://x.com/vivido_dev'
@@ -36,6 +40,7 @@ export default function Navbar() {
   const [productsOpen, setProductsOpen] = useState(false)
   const productsRef = useRef<HTMLDivElement>(null)
   const { pathname } = useLocation()
+  const t = useT().nav
 
   // Close both menus on navigation. Adjusting during render rather than in an
   // effect avoids rendering the open menu for a frame on the new route.
@@ -46,22 +51,7 @@ export default function Navbar() {
     setProductsOpen(false)
   }
 
-  // Dismiss the products menu on outside click or Escape.
-  useEffect(() => {
-    if (!productsOpen) return
-    const onClick = (event: MouseEvent) => {
-      if (!productsRef.current?.contains(event.target as Node)) setProductsOpen(false)
-    }
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setProductsOpen(false)
-    }
-    document.addEventListener('mousedown', onClick)
-    document.addEventListener('keydown', onKey)
-    return () => {
-      document.removeEventListener('mousedown', onClick)
-      document.removeEventListener('keydown', onKey)
-    }
-  }, [productsOpen])
+  useDismiss(productsRef, productsOpen, setProductsOpen)
 
   const linkClass = ({ isActive }: { isActive: boolean }) =>
     `rounded-md px-3 py-2 text-sm font-medium transition-colors ${
@@ -88,7 +78,7 @@ export default function Navbar() {
                 productsActive ? 'text-accent-300' : 'text-zinc-400 hover:bg-zinc-900/60 hover:text-zinc-100'
               }`}
             >
-              Products
+              {t.products}
               <svg
                 className={`h-3.5 w-3.5 transition-transform ${productsOpen ? 'rotate-180' : ''}`}
                 fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true"
@@ -105,8 +95,8 @@ export default function Navbar() {
                     to={item.to}
                     className="block border-b border-zinc-800/70 px-4 py-3 transition-colors last:border-b-0 hover:bg-zinc-800/60"
                   >
-                    <span className="text-sm font-medium text-zinc-100">{item.name}</span>
-                    <span className="mt-0.5 block text-xs text-zinc-500">{item.blurb}</span>
+                    <span className="text-sm font-medium text-zinc-100">{item.name ?? t.plugins}</span>
+                    <span className="mt-0.5 block text-xs text-zinc-500">{t.blurbs[item.id]}</span>
                   </Link>
                 ))}
               </div>
@@ -115,24 +105,25 @@ export default function Navbar() {
 
           {LEARN.map((item) => (
             <NavLink key={item.to} to={item.to} className={linkClass}>
-              {item.label}
+              {t[item.id]}
             </NavLink>
           ))}
           <a
             href="https://github.com/vivido-dev/vivid_protocol/blob/dev/vivid-protocol-1.5-spec.md"
             className="rounded-md px-3 py-2 text-sm font-medium text-zinc-400 transition-colors hover:bg-zinc-900/60 hover:text-zinc-100"
           >
-            Protocol
+            {t.protocol}
           </a>
         </div>
 
         <div className="ml-auto flex items-center gap-2">
+          <LanguageSwitcher />
           <a
             href={GITHUB_ORG}
             target="_blank"
             rel="noopener noreferrer"
             className="rounded-md p-2 text-zinc-400 transition-colors hover:bg-zinc-900/60 hover:text-zinc-100"
-            aria-label="Vivido on GitHub"
+            aria-label={t.github}
           >
             <GithubMark />
           </a>
@@ -141,7 +132,7 @@ export default function Navbar() {
             target="_blank"
             rel="noopener noreferrer"
             className="rounded-md p-2 text-zinc-400 transition-colors hover:bg-zinc-900/60 hover:text-zinc-100"
-            aria-label="Vivido on X"
+            aria-label={t.x}
           >
             <XMark />
           </a>
@@ -149,7 +140,7 @@ export default function Navbar() {
             type="button"
             onClick={() => setMobileOpen((open) => !open)}
             className="rounded-md p-2 text-zinc-400 transition-colors hover:bg-zinc-900/60 hover:text-zinc-100 md:hidden"
-            aria-label="Toggle navigation"
+            aria-label={t.toggle}
             aria-expanded={mobileOpen}
             aria-controls="mobile-navigation"
           >
@@ -166,19 +157,19 @@ export default function Navbar() {
 
       {mobileOpen && (
         <div id="mobile-navigation" className="border-t border-zinc-800 bg-zinc-950 px-4 pb-5 pt-3 md:hidden">
-          <p className="px-1 pb-2 font-mono text-[10px] uppercase tracking-widest text-zinc-600">Products</p>
+          <p className="px-1 pb-2 font-mono text-[10px] uppercase tracking-widest text-zinc-600">{t.products}</p>
           {PRODUCTS.map((item) => (
             <NavLink key={item.to} to={item.to} className="block rounded-md px-3 py-2 text-sm text-zinc-300 hover:bg-zinc-900">
-              {item.name}
+              {item.name ?? t.plugins}
             </NavLink>
           ))}
-          <p className="px-1 pb-2 pt-4 font-mono text-[10px] uppercase tracking-widest text-zinc-600">Learn</p>
+          <p className="px-1 pb-2 pt-4 font-mono text-[10px] uppercase tracking-widest text-zinc-600">{t.learn}</p>
           {LEARN.map((item) => (
             <NavLink key={item.to} to={item.to} className="block rounded-md px-3 py-2 text-sm text-zinc-300 hover:bg-zinc-900">
-              {item.label}
+              {t[item.id]}
             </NavLink>
           ))}
-          <a href="/#install" className="btn btn-primary mt-4 w-full">Install</a>
+          <a href="/#install" className="btn btn-primary mt-4 w-full">{t.install}</a>
         </div>
       )}
     </nav>

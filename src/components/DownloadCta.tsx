@@ -1,5 +1,6 @@
 import CopyCommand from './CopyCommand'
-import { detectPlatform, DOWNLOAD_PLACEHOLDER, PLATFORM_DOWNLOAD } from '../lib/platform'
+import { detectPlatform, DOWNLOAD_PLACEHOLDER } from '../lib/platform'
+import { useT } from '../i18n/context'
 
 /**
  * The shared install CTA: a signed-installer download on macOS and Windows,
@@ -8,12 +9,14 @@ import { detectPlatform, DOWNLOAD_PLACEHOLDER, PLATFORM_DOWNLOAD } from '../lib/
  */
 export function DownloadCta({ className = '' }: { className?: string }) {
   const platform = detectPlatform()
+  const t = useT().platform
 
   if (platform === 'linux') {
     return <CopyCommand command="cargo install vivido" className={className} />
   }
 
-  const { label, sublabel } = PLATFORM_DOWNLOAD[platform]
+  const [label, sublabel] =
+    platform === 'macos' ? [t.downloadMac, t.macInstaller] : [t.downloadWindows, t.windowsInstaller]
   return (
     <a href={DOWNLOAD_PLACEHOLDER} className={`btn btn-primary ${className}`}>
       {label}
@@ -26,10 +29,11 @@ export function DownloadCta({ className = '' }: { className?: string }) {
  *  placeholder. Hidden on Windows, where the primary CTA already is the
  *  installer. */
 export function WindowsInstallerLink({ className = '' }: { className?: string }) {
+  const t = useT().platform
   if (detectPlatform() === 'windows') return null
   return (
     <a href={DOWNLOAD_PLACEHOLDER} className={`btn btn-ghost ${className}`}>
-      Windows installer
+      {t.windowsLink}
       <span className="font-mono text-xs font-medium opacity-70">.exe</span>
     </a>
   )

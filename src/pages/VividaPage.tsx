@@ -6,42 +6,23 @@ import SectionHeading from '../components/SectionHeading'
 import CopyCommand from '../components/CopyCommand'
 import GithubButton from '../components/GithubButton'
 import Reveal from '../components/Reveal'
-
-const FEATURES = [
-  ['01', 'A place for every project', 'Group your work into named workspaces. Move between projects from the sidebar, with tabs and splits keeping each task close at hand.'],
-  ['02', 'More than a wall of text', 'Built on Vivido, your panes can show images, play video, and render audio alongside terminal output. Keep the preview next to the work.'],
-  ['03', 'Agents with eyes and hands', 'Built-in automation lets agents inspect panes, take screenshots, type, press keys, and use the mouse to check the results of their work.'],
-  ['04', 'Room to find your flow', 'Open tabs, split panes, and arrange your workspace from the keyboard. GPU rendering keeps everything smooth and readable.'],
-]
-
-const SHORTCUTS = [
-  ['Mod T', 'New tab'],
-  ['Mod D', 'Split left and right'],
-  ['Mod Shift D', 'Split top and bottom'],
-  ['Mod Shift N', 'New workspace'],
-  ['Mod Shift B', 'Cycle sidebar size'],
-  ['Mod 1–9', 'Switch workspace'],
-]
+import { useT } from '../i18n/context'
+import Rich from '../i18n/Rich'
 
 export default function VividaPage() {
+  const { common, vivida: t } = useT()
   return (
     <div>
       <PageHero
-        backTo={{ to: '/', label: 'The Vivido suite' }}
-        eyebrow="Vivida · terminal workspace"
-        title={<>A shared home for you and <span className="text-gradient">your agents.</span></>}
-        lede={
-          <>
-            Bring projects, terminals, and AI agents into one window. Vivida combines workspaces,
-            tabs, and split panes with everything Vivido can render — and the automation an agent
-            needs to work in the same panes you are looking at, not a hidden sandbox.
-          </>
-        }
+        backTo={{ to: '/', label: common.suiteBack }}
+        eyebrow={t.eyebrow}
+        title={<Rich text={t.title} />}
+        lede={t.lede}
         actions={
           <>
             <GithubButton repo="vivida" />
             <a href="#workspace" className="btn btn-ghost">
-              Explore the workspace
+              {t.explore}
               <span aria-hidden="true">↓</span>
             </a>
           </>
@@ -62,14 +43,14 @@ export default function VividaPage() {
       <section id="workspace" className="hairline px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <SectionHeading
-            eyebrow="Less window juggling, more making"
-            title="Everything in its place."
+            eyebrow={t.place.eyebrow}
+            title={t.place.title}
           />
           <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
-            {FEATURES.map(([number, title, description], index) => (
-              <Reveal key={number} delay={index * 70}>
+            {t.place.features.map(([title, description], index) => (
+              <Reveal key={index} delay={index * 70}>
                 <article className="card h-full p-7 sm:p-8">
-                  <span className="font-mono text-xs text-accent-400">{number} /</span>
+                  <span className="font-mono text-xs text-accent-400">0{index + 1} /</span>
                   <h3 className="mt-5 text-xl font-semibold text-zinc-100">{title}</h3>
                   <p className="mt-3 text-sm leading-relaxed text-zinc-400">{description}</p>
                 </article>
@@ -95,21 +76,19 @@ export default function VividaPage() {
             <div>
               <p className="eyebrow">
                 <span className="eyebrow-dot" aria-hidden="true" />
-                See. Act. Verify.
+                {t.agents.eyebrow}
               </p>
               <h2 className="mt-4 text-3xl font-semibold tracking-tight text-zinc-100">
-                Work alongside your agents.
+                {t.agents.title}
               </h2>
               <p className="mt-5 text-base leading-relaxed text-zinc-400">
-                Agents can locate the right pane, inspect output, arrange tabs and splits, and take a
-                screenshot to verify their work. You share the same workspace and follow along as it
-                happens — which also means you can take over mid-task.
+                {t.agents.body}
               </p>
               <a
                 href="https://github.com/vivido-dev/vivida/blob/dev/docs/automation.md"
                 className="mt-6 inline-block text-sm text-accent-400 transition-colors hover:text-accent-300"
               >
-                Read the automation guide <span aria-hidden="true">↗</span>
+                {t.agents.guide} <span aria-hidden="true">↗</span>
               </a>
             </div>
           </div>
@@ -120,9 +99,9 @@ export default function VividaPage() {
         <div className="mx-auto grid grid-cols-1 max-w-7xl items-start gap-12 lg:grid-cols-2">
           <div>
             <SectionHeading
-              eyebrow="Stay at the keyboard"
-              title="Make room in a keystroke."
-              lede="Mod is Cmd on macOS and Ctrl everywhere else. The gear in the tab bar has the full list."
+              eyebrow={t.keys.eyebrow}
+              title={t.keys.title}
+              lede={t.keys.lede}
             />
             <div className="mt-8">
               <CopyCommand command="cargo install vivida" />
@@ -131,12 +110,12 @@ export default function VividaPage() {
               to="/vivido"
               className="mt-6 inline-block text-sm text-accent-400 transition-colors hover:text-accent-300"
             >
-              Meet Vivido, the terminal inside <span aria-hidden="true">→</span>
+              {t.keys.meetVivido} <span aria-hidden="true">→</span>
             </Link>
           </div>
 
           <dl className="card divide-y divide-zinc-800 px-5">
-            {SHORTCUTS.map(([keys, action]) => (
+            {Object.entries(t.keys.shortcuts).map(([keys, action]) => (
               <div key={keys} className="flex flex-wrap items-center justify-between gap-3 py-3.5">
                 <dt className="text-sm text-zinc-300">{action}</dt>
                 <dd><kbd>{keys}</kbd></dd>

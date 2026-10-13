@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useT } from '../i18n/context'
 
 export interface CodeSample {
   label: string
@@ -13,13 +14,14 @@ interface CodeTabsProps {
 }
 
 export default function CodeTabs({ samples, className = '' }: CodeTabsProps) {
+  const t = useT()
   const [active, setActive] = useState(0)
   const sample = samples[active]
 
   return (
     <div className={`code-block ${className}`}>
       <div className="code-block-head">
-        <div role="tablist" aria-label="Choose a language" className="flex gap-1 -ml-1">
+        <div role="tablist" aria-label={t.common.chooseLanguage} className="flex gap-1 -ml-1">
           {samples.map((item, index) => (
             <button
               key={item.label}

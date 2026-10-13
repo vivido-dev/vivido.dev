@@ -7,44 +7,22 @@ import FeatureList from '../components/FeatureList'
 import CopyCommand from '../components/CopyCommand'
 import GithubButton from '../components/GithubButton'
 import Reveal from '../components/Reveal'
-
-const FEATURES = [
-  'Detachable named sessions backed by a persistent server',
-  'Tabs, tiled and floating panes, zoom, copy mode, and mouse resize',
-  'A virtual Vivid presenter per pane — media survives detach and re-attach',
-  'Fragment-aware pane media occlusion and stable snapshot reconciliation',
-  'Scriptable pane automation through vvmux msg',
-  'A plugin system with an agent navigator that reports idle, working, or blocked',
-]
-
-const KEYS = [
-  ['Ctrl+b %', 'Split left and right'],
-  ['Ctrl+b "', 'Split top and bottom'],
-  ['Ctrl+b ←→↑↓', 'Move focus between panes'],
-  ['Ctrl+b z', 'Toggle zoom on the focused pane'],
-  ['Ctrl+b d', 'Detach, leaving everything running'],
-  ['Ctrl+b c / n / p', 'New tab, next tab, previous tab'],
-  ['Ctrl+b [', 'Copy mode'],
-]
+import { useT } from '../i18n/context'
+import Rich from '../i18n/Rich'
 
 export default function VvmuxPage() {
+  const { common, vvmux: t } = useT()
   return (
     <div>
       <PageHero
-        backTo={{ to: '/', label: 'The Vivido suite' }}
-        eyebrow="vvmux · detachable multiplexer"
-        title={<>Detach the session.<br /><span className="text-gradient">Keep the media.</span></>}
-        lede={
-          <>
-            vvmux is tmux-shaped and Vivid-aware. Its background server owns panes, PTYs, layout, and
-            scrollback; the foreground client bridges only currently visible media into the attached
-            Vivido window. Detaching never hands the daemon your window token.
-          </>
-        }
+        backTo={{ to: '/', label: common.suiteBack }}
+        eyebrow={t.eyebrow}
+        title={<Rich text={t.title} />}
+        lede={t.lede}
         actions={
           <>
             <Link to="/vvmux/plugins" className="btn btn-primary">
-              Browse plugins
+              {t.browsePlugins}
               <span aria-hidden="true">→</span>
             </Link>
             <GithubButton repo="vvmux" />
@@ -75,7 +53,7 @@ export default function VvmuxPage() {
       <section className="hairline px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <div className="mx-auto grid grid-cols-1 max-w-7xl gap-12 lg:grid-cols-2">
           <Reveal>
-            <FeatureList heading="What it does" items={FEATURES} />
+            <FeatureList heading={common.whatItDoes} items={t.features} />
             <div className="mt-8">
               <CopyCommand command="cargo install vvmux" />
             </div>
@@ -83,11 +61,11 @@ export default function VvmuxPage() {
 
           <Reveal delay={80}>
             <h2 className="font-mono text-[11px] uppercase tracking-widest text-zinc-500">
-              Default keys
+              {t.keysHeading}
             </h2>
-            <p className="mt-2 text-xs text-zinc-600">The prefix is Ctrl+b, as you would expect.</p>
+            <p className="mt-2 text-xs text-zinc-600">{t.keysNote}</p>
             <dl className="card mt-4 divide-y divide-zinc-800 px-5">
-              {KEYS.map(([keys, action]) => (
+              {Object.entries(t.keys).map(([keys, action]) => (
                 <div key={keys} className="flex flex-wrap items-center justify-between gap-3 py-3.5">
                   <dt className="text-sm text-zinc-300">{action}</dt>
                   <dd><kbd>{keys}</kbd></dd>
@@ -101,16 +79,12 @@ export default function VvmuxPage() {
       <section className="hairline px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <SectionHeading
-            eyebrow="The security shape"
-            title="A daemon that outlives your window should not hold its keys."
-            lede="This is the part that makes a media-aware multiplexer different from a text one, and it is worth understanding before you trust it with a long-running session."
+            eyebrow={t.security.eyebrow}
+            title={t.security.title}
+            lede={t.security.lede}
           />
           <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
-            {[
-              ['The server owns state', 'Panes, PTYs, layout, and scrollback live in a background process that survives detach.'],
-              ['The client owns authority', 'Only the attached foreground client holds the outer Vivido window token. Detaching releases it.'],
-              ['The bridge is narrow', 'Visible media is relayed through source-scoped writers, reconciled from stable snapshots.'],
-            ].map(([title, blurb], index) => (
+            {t.security.points.map(([title, blurb], index) => (
               <Reveal key={title} delay={index * 80}>
                 <div className="card h-full p-6">
                   <h3 className="text-base font-semibold text-zinc-100">{title}</h3>

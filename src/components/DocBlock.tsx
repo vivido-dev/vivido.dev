@@ -18,12 +18,12 @@ export function DocSectionBlock({
   )
 }
 
-/** A reference table. Rows are [term, description] pairs. */
+/** A reference table. Rows are [term, description] pairs, under two column headings. */
 export function RefTable({
   head,
   rows,
 }: {
-  head: [string, string]
+  head: string[]
   rows: [string, string][]
 }) {
   return (
